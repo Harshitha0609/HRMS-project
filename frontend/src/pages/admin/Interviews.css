@@ -1,0 +1,173 @@
+.interviews-page {
+          padding: 24px;
+          color: #172033;
+          font-family: Arial, sans-serif;
+        }
+
+        .iv-head {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 15px;
+          margin-bottom: 20px;
+        }
+
+        .iv-head h1 {
+          margin: 0 0 6px;
+          font-size: 28px;
+        }
+
+        .iv-head p {
+          margin: 0;
+          color: #64748b;
+        }
+
+        .iv-btn {
+          border: 0;
+          border-radius: 7px;
+          padding: 10px 15px;
+          background: #2563eb;
+          color: #fff;
+          cursor: pointer;
+          font-weight: 600;
+        }
+
+        .iv-btn:disabled {
+          opacity: 0.6;
+        }
+
+        .iv-btn.alt {
+          background: #e8eef8;
+          color: #24324a;
+        }
+
+        .iv-panel {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 12px;
+          align-items: end;
+          background: #fff;
+          padding: 16px;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+          margin-bottom: 18px;
+        }
+
+        .iv-field {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+          min-width: 170px;
+          flex: 1;
+        }
+
+        .iv-field label {
+          font-size: 13px;
+          font-weight: 600;
+          color: #475569;
+        }
+
+        .iv-field input,
+        .iv-field select,
+        .iv-field textarea {
+          box-sizing: border-box;
+          width: 100%;
+          border: 1px solid #cbd5e1;
+          border-radius: 6px;
+          padding: 9px 10px;
+          font: inherit;
+          background: #fff;
+        }
+
+        .iv-field textarea {
+          min-height: 75px;
+        }
+
+        .iv-alert {
+          padding: 11px 14px;
+          border-radius: 7px;
+          margin: 12px 0;
+        }
+
+        .iv-error {
+          background: #fef2f2;
+          color: #b91c1c;
+        }
+
+        .iv-success {
+          background: #ecfdf5;
+          color: #047857;
+        }
+
+        .iv-table-wrap {
+          overflow-x: auto;
+          background: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 10px;
+        }
+
+        .iv-table {
+          width: 100%;
+          border-collapse: collapse;
+          min-width: 800px;
+        }
+
+        .iv-table th,
+        .iv-table td {
+          text-align: left;
+          padding: 12px;
+          border-bottom: 1px solid #e2e8f0;
+          vertical-align: top;
+        }
+
+        .iv-table th {
+          font-size: 12px;
+          color: #64748b;
+          background: #f8fafc;
+          text-transform: uppercase;
+        }
+
+        .iv-table td {
+          font-size: 14px;
+        }
+
+        .iv-empty {
+          padding: 24px;
+          text-align: center;
+          color: #64748b;
+        }
+
+        .iv-edit {
+          border: 0;
+          background: #e8eef8;
+          color: #1d4ed8;
+          padding: 7px 10px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .iv-title {
+          flex-basis: 100%;
+          margin: 0;
+          font-size: 19px;
+        }
+
+        .iv-actions {
+          display: flex;
+          gap: 9px;
+        }
+
+        @media (max-width: 650px) {
+          .interviews-page {
+            padding: 14px;
+          }
+
+          .iv-head {
+            align-items: flex-start;
+            flex-direction: column;
+          }
+
+          .iv-field {
+            min-width: 100%;
+          }
+        }

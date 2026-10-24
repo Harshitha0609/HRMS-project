@@ -1,0 +1,31 @@
+/* Global base styles for the HRMS application */
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #172033;
+  background: #f5f7fb;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  color-scheme: light;
+  --hrms-ink: #172033;
+  --hrms-muted: #667085;
+  --hrms-border: #e3e8f0;
+  --hrms-panel: #ffffff;
+  --hrms-canvas: #f5f7fb;
+  --hrms-primary: #2563eb;
+  --hrms-primary-hover: #1d4ed8;
+  --hrms-danger: #b42318;
+  --hrms-danger-bg: #fef3f2;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { min-width: 320px; min-height: 100%; background: var(--hrms-canvas); }
+body { min-width: 320px; min-height: 100vh; margin: 0; background: var(--hrms-canvas); color: var(--hrms-ink); }
+#root { min-height: 100vh; width: 100%; margin: 0; text-align: left; }
+button, input, select, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+img, svg { max-width: 100%; }

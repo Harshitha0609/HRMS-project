@@ -1,0 +1,595 @@
+/* HRMS visual layer: soft glass, dimensional depth and accessible motion */
+:root {
+  --hrms-canvas: #f4f5fb;
+  --hrms-panel: rgba(255, 255, 255, .92);
+  --hrms-ink: #20213a;
+  --hrms-muted: #73758f;
+  --hrms-border: #e6e4f2;
+  --hrms-primary: #6755d9;
+  --hrms-primary-hover: #5140c0;
+  --hrms-lilac: #eeeaff;
+  --hrms-coral: #ff806f;
+  --hrms-shadow: 0 16px 42px rgba(38, 31, 91, .09);
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 82% 0%, rgba(178, 162, 255, .17), transparent 32rem),
+    radial-gradient(ellipse at 4% 45%, rgba(255, 190, 173, .12), transparent 28rem),
+    var(--hrms-canvas);
+}
+
+.admin-main {
+  background: transparent;
+}
+
+.admin-sidebar {
+  background:
+    radial-gradient(circle at 20% 0%, rgba(128, 111, 237, .24), transparent 18rem),
+    linear-gradient(165deg, #19182f 0%, #111827 62%, #1b1b34 100%);
+  box-shadow: 12px 0 34px rgba(27, 23, 67, .12);
+}
+
+.admin-sidebar h2 {
+  width: fit-content;
+  border-radius: 12px;
+  padding: 9px 13px;
+  background: linear-gradient(135deg, #7968eb, #a58cf4 60%, #ff9c8f);
+  box-shadow: 0 8px 24px rgba(121, 104, 235, .27);
+}
+
+.admin-sidebar nav a,
+.admin-sidebar nav button {
+  position: relative;
+  transition: transform .2s ease, color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.admin-sidebar nav a:hover,
+.admin-sidebar nav a.active {
+  transform: translateX(4px);
+  background: linear-gradient(100deg, rgba(123, 105, 232, .28), rgba(123, 105, 232, .08));
+  box-shadow: inset 3px 0 #a99aff;
+}
+.admin-sidebar nav a[aria-current="page"] {
+  transform: translateX(4px);
+  background: linear-gradient(105deg, rgba(126, 108, 239, .42), rgba(126, 108, 239, .14));
+  box-shadow: inset 3px 0 #c4b9ff, 0 8px 20px rgba(8, 8, 28, .2);
+  color: #fff;
+  font-weight: 700;
+}
+
+:where(.dashboard-page, .departments-page, .candidates-page, .jobs-page,
+  .applications-page, .interviews-page, .placements-page, .payroll-page,
+  .employees-page, .attendance-page, .leave-page, .reports-page,
+  .candidate-jobs-page) {
+  animation: hrms-page-enter .55s cubic-bezier(.2, .75, .25, 1) both;
+}
+
+:where(.dashboard-page, .departments-page, .candidates-page, .jobs-page,
+  .applications-page, .interviews-page, .placements-page, .payroll-page,
+  .employees-page, .attendance-page, .leave-page, .reports-page,
+  .candidate-jobs-page) h1 {
+  color: #252344;
+  letter-spacing: -.035em;
+}
+
+:where(.dp-panel, .candidate-filter-bar, .candidate-form-panel, .candidate-table-panel,
+  .jobs-filter, .jobs-form-panel, .jobs-table-panel,
+  .applications-filter, .applications-form-panel, .applications-table-panel,
+  .iv-panel, .interviews-panel, .pl-panel, .em-panel, .at-panel, .lv-panel,
+  .py-panel, .rp-card, .rp-section, .dashboard-card, .dashboard-panel,
+  .cj-hero, .cj-card, .cj-profile-form, .cj-notification) {
+  border: 1px solid rgba(225, 222, 242, .9);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(255, 255, 255, .98), rgba(250, 249, 255, .93));
+  box-shadow: 0 10px 28px rgba(48, 40, 103, .055), 0 2px 6px rgba(40, 35, 82, .035);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+:where(.dashboard-card, .rp-card, .cj-card):hover {
+  transform: perspective(900px) translateY(-5px) rotateX(1deg) rotateY(-.6deg);
+  border-color: #d5cef9;
+  box-shadow: 0 20px 38px rgba(48, 40, 103, .12), 0 5px 12px rgba(70, 56, 140, .06);
+}
+
+:where(.dp-wrap, .candidate-table-panel, .jobs-table-panel, .applications-table-panel,
+  .iv-table-wrap, .pl-wrap, .em-wrap, .at-wrap, .lv-wrap, .py-wrap) {
+  overflow: auto;
+  border: 1px solid rgba(225, 222, 242, .95);
+  border-radius: 17px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: var(--hrms-shadow);
+}
+
+:where(.dp-table, .candidate-table, .jobs-table, .applications-table,
+  .iv-table, .pl-table, .em-table, .at-table, .lv-table, .py-table) thead th {
+  background: linear-gradient(100deg, #f2f0ff, #f8f7ff 70%, #fff5f2);
+  color: #625d84;
+  letter-spacing: .075em;
+}
+
+:where(.dp-table, .candidate-table, .jobs-table, .applications-table,
+  .iv-table, .pl-table, .em-table, .at-table, .lv-table, .py-table) tbody tr {
+  transition: background .18s ease, transform .18s ease;
+}
+:where(.dp-table, .candidate-table, .jobs-table, .applications-table,
+  .iv-table, .pl-table, .em-table, .at-table, .lv-table, .py-table) tbody tr:hover {
+  background: #faf9ff;
+}
+
+:where(.dp-btn, .candidate-primary, .jobs-primary, .applications-primary,
+  .iv-btn, .pl-btn, .em-btn, .at-btn, .lv-btn, .py-btn, .rp-button,
+  .dashboard-button, .cj-apply, .cj-retry, .login-submit) {
+  background: linear-gradient(135deg, #6554d5, #806be7 65%, #967df0);
+  box-shadow: 0 7px 16px rgba(103, 85, 217, .2);
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+}
+:where(.dp-btn, .candidate-primary, .jobs-primary, .applications-primary,
+  .iv-btn, .pl-btn, .em-btn, .at-btn, .lv-btn, .py-btn, .rp-button,
+  .dashboard-button, .cj-apply, .cj-retry, .login-submit):hover:not(:disabled) {
+  transform: translateY(-2px);
+  filter: saturate(1.08) brightness(1.04);
+  box-shadow: 0 12px 24px rgba(103, 85, 217, .28);
+}
+
+:where(.dp-edit, .candidate-edit, .jobs-edit, .applications-edit,
+  .iv-edit, .pl-edit, .em-edit, .at-edit, .lv-edit, .py-edit,
+  .dp-alt, .candidate-secondary, .jobs-secondary, .applications-secondary,
+  .cj-cancel, .cj-notification button) {
+  border-radius: 8px;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+:where(.dp-edit, .candidate-edit, .jobs-edit, .applications-edit,
+  .iv-edit, .pl-edit, .em-edit, .at-edit, .lv-edit, .py-edit):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 13px rgba(71, 59, 145, .12);
+}
+
+:where(input, select, textarea) {
+  transition: border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+:where(input, select, textarea):focus {
+  border-color: #8d7bea !important;
+  box-shadow: 0 0 0 4px rgba(126, 106, 229, .13);
+  outline: none;
+}
+
+.cj-hero {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(118deg, #e9e6ff, #f2edff 54%, #fff0eb);
+  box-shadow: 0 18px 42px rgba(85, 69, 175, .12);
+}
+.cj-hero::after {
+  content: '';
+  position: absolute;
+  top: -72px;
+  right: -30px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(255, 255, 255, .68);
+  border-radius: 50%;
+  background: linear-gradient(145deg, rgba(255,255,255,.48), rgba(255,255,255,.08));
+  box-shadow: 0 12px 45px rgba(98, 78, 193, .12), inset 0 0 24px rgba(255,255,255,.35);
+  pointer-events: none;
+}
+.cj-card { transform-style: preserve-3d; }
+.cj-card:hover { transform: perspective(950px) translateY(-6px) rotateX(1.2deg) rotateY(-1deg); box-shadow: 0 22px 40px rgba(48, 40, 103, .13); }
+.cj-chip { background: #f0edff; color: #59518f; }
+.cj-tabs button { transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+.cj-tabs button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(70, 56, 140, .12); }
+
+.delete-action-button { background: linear-gradient(135deg, #fff1f0, #ffe5e2); box-shadow: 0 4px 10px rgba(180, 35, 24, .08); }
+.delete-action-button:hover:not(:disabled) { transform: translateY(-1px); box-shadow: 0 8px 16px rgba(180, 35, 24, .15); }
+
+@keyframes hrms-page-enter {
+  from { opacity: 0; transform: translateY(12px) scale(.995); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 760px) {
+  :where(.dp-panel, .candidate-filter-bar, .candidate-form-panel, .candidate-table-panel,
+    .jobs-filter, .jobs-form-panel, .jobs-table-panel, .applications-filter,
+    .applications-form-panel, .applications-table-panel, .iv-panel, .pl-panel,
+    .em-panel, .at-panel, .lv-panel, .py-panel, .rp-card, .rp-section) {
+    border-radius: 13px;
+  }
+}
+
+/* A distinctive welcome screen that matches the admin and candidate workspaces */
+.login-page {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 32px 18px;
+  background:
+    radial-gradient(ellipse at 18% 16%, rgba(135, 115, 239, .28), transparent 31rem),
+    radial-gradient(ellipse at 84% 82%, rgba(255, 153, 130, .22), transparent 30rem),
+    linear-gradient(135deg, #17172b 0%, #252044 48%, #192c3c 100%);
+}
+.login-page::before,
+.login-page::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: hrms-orbit 18s ease-in-out infinite alternate;
+}
+.login-page::before {
+  width: min(68vw, 680px);
+  aspect-ratio: 1;
+  top: -31%;
+  left: -18%;
+  box-shadow: 0 0 0 28px rgba(255,255,255,.025), 0 0 0 70px rgba(255,255,255,.018);
+}
+.login-page::after {
+  width: min(48vw, 460px);
+  aspect-ratio: 1;
+  right: -13%;
+  bottom: -32%;
+  animation-delay: -7s;
+  box-shadow: 0 0 0 25px rgba(255,255,255,.025), 0 0 0 62px rgba(255,255,255,.018);
+}
+.login-card {
+  position: relative;
+  width: min(500px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, .58);
+  border-radius: 24px;
+  padding: clamp(24px, 5vw, 38px);
+  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(245,243,255,.94) 66%, rgba(255,247,244,.96));
+  box-shadow: 0 34px 90px rgba(5, 7, 25, .38), 0 10px 28px rgba(10, 8, 40, .2), inset 0 1px rgba(255,255,255,.95);
+  animation: hrms-card-arrive .65s cubic-bezier(.2,.8,.25,1) both;
+}
+.login-card h1 { color: #29234d; letter-spacing: -.045em; font-size: clamp(1.75rem, 5vw, 2.1rem); }
+.login-card > p { color: #73718b; line-height: 1.55; }
+.login-field label { color: #504c68; font-size: .83rem; letter-spacing: .015em; }
+.login-field input, .login-field select, .login-field textarea {
+  border: 1px solid #dfdced;
+  border-radius: 11px;
+  background: rgba(255,255,255,.82);
+  color: #252344;
+  padding: 12px 13px;
+}
+.login-field input:hover, .login-field select:hover, .login-field textarea:hover { border-color: #bcb4e7; }
+.login-submit { min-height: 46px; border-radius: 11px; letter-spacing: .01em; }
+.login-toggle { color: #73718b; }
+.login-toggle button { color: #5d4ec7; }
+.login-error, .login-success { border: 1px solid transparent; }
+.login-error { border-color: #ffd4d0; background: linear-gradient(120deg,#fff0ef,#fff8f7); }
+.login-success { border-color: #bce7d7; background: linear-gradient(120deg,#eefbf6,#f8fffc); }
+
+/* Add depth to the primary dashboard and its information panels */
+.dashboard-header {
+  border: 1px solid rgba(255,255,255,.8);
+  border-radius: 22px;
+  padding: 22px 24px;
+  background: linear-gradient(112deg, rgba(255,255,255,.96), rgba(242,239,255,.94) 68%, rgba(255,245,241,.92));
+  box-shadow: 0 16px 38px rgba(45,39,94,.075), inset 0 1px #fff;
+}
+.dashboard-card { overflow: hidden; }
+.dashboard-card::after {
+  content: '';
+  position: absolute;
+  width: 105px;
+  height: 105px;
+  top: -48px;
+  right: -35px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,.95), var(--tile-wash, #eeeaff) 72%);
+  opacity: .9;
+  pointer-events: none;
+}
+.dashboard-panel { background: linear-gradient(145deg, #fff, #fbfaff); }
+.dashboard-count, .payroll-period { background: linear-gradient(135deg,#efecff,#f8f5ff); color: #6252c3; box-shadow: inset 0 1px #fff; }
+
+@keyframes hrms-orbit {
+  from { transform: translate3d(0, 0, 0) rotate(0deg); }
+  to { transform: translate3d(18px, -12px, 0) rotate(7deg); }
+}
+@keyframes hrms-card-arrive {
+  from { opacity: 0; transform: perspective(1000px) translateY(18px) rotateX(2deg) scale(.985); }
+  to { opacity: 1; transform: perspective(1000px) translateY(0) rotateX(0) scale(1); }
+}
+@media (max-width: 640px) {
+  .login-card { max-height: calc(100vh - 28px); border-radius: 19px; }
+  .dashboard-header { align-items: stretch; padding: 18px; }
+}
+
+/* Give every admin section the same welcoming banner treatment as the dashboard */
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header) {
+  isolation: isolate;
+  overflow: visible;
+  min-height: 122px;
+  margin: 0 0 24px;
+  border: 1px solid rgba(255,255,255,.86);
+  border-radius: 22px;
+  padding: 22px 25px;
+  background:
+    radial-gradient(ellipse at 95% 5%, rgba(255,255,255,.92), transparent 18rem),
+    linear-gradient(112deg, rgba(255,255,255,.98), rgba(242,239,255,.96) 62%, rgba(255,244,239,.94));
+  box-shadow: 0 16px 38px rgba(45,39,94,.075), 0 3px 8px rgba(45,39,94,.035), inset 0 1px #fff;
+}
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header)::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 190px;
+  height: 190px;
+  right: -44px;
+  top: -105px;
+  border: 1px solid rgba(130,112,220,.17);
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px rgba(130,112,220,.035), 0 0 0 42px rgba(255,147,123,.035);
+  pointer-events: none;
+}
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header) h1 {
+  margin-top: 0;
+  padding: .04em .04em .12em;
+  color: #29254c;
+  font-size: clamp(1.7rem, 3vw, 2.15rem);
+  line-height: 1.25;
+  letter-spacing: -.045em;
+}
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header) > div {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  padding: 3px 2px 5px;
+}
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header) p:not(:first-child) {
+  color: #6e6d87;
+}
+
+/* Clear, matching edit and delete actions in every data table */
+:where(.dp-edit, .candidate-edit, .jobs-edit, .applications-edit,
+  .iv-edit, .pl-edit, .em-edit, .at-edit, .lv-edit, .py-edit) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 1px solid #d8d1fa;
+  border-radius: 10px;
+  padding: 7px 12px;
+  background: linear-gradient(145deg, #f5f2ff, #ebe7ff);
+  color: #5544b7;
+  box-shadow: 0 3px 8px rgba(91,75,177,.09), inset 0 1px rgba(255,255,255,.95);
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+:where(.dp-edit, .candidate-edit, .jobs-edit, .applications-edit,
+  .iv-edit, .pl-edit, .em-edit, .at-edit, .lv-edit, .py-edit):hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #b9acef;
+  background: linear-gradient(145deg, #eeeaff, #e3ddff);
+  box-shadow: 0 8px 16px rgba(91,75,177,.17), inset 0 1px rgba(255,255,255,.95);
+}
+:where(.dp-edit, .candidate-edit, .jobs-edit, .applications-edit,
+  .iv-edit, .pl-edit, .em-edit, .at-edit, .lv-edit, .py-edit):active:not(:disabled),
+.delete-action-button:active:not(:disabled) { transform: translateY(0) scale(.97); }
+.delete-action { display: inline-flex; vertical-align: middle; flex-direction: column; align-items: flex-start; gap: 4px; margin-left: 6px; }
+/* Some table styles set every span to display:block; keep the delete control inline beside Edit. */
+table td span.delete-action { display: inline-flex; vertical-align: middle; }
+table td:has(span.delete-action) { white-space: nowrap; }
+.delete-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  border: 1px solid #ffd3ce;
+  border-radius: 10px;
+  padding: 7px 12px;
+  background: linear-gradient(145deg, #fff5f3, #ffe9e5);
+  color: #bd4037;
+  box-shadow: 0 3px 8px rgba(184,53,43,.08), inset 0 1px rgba(255,255,255,.95);
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease, background .18s ease;
+}
+.delete-action-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  border-color: #ffb3aa;
+  background: linear-gradient(145deg, #ffefec, #ffddd7);
+  box-shadow: 0 8px 16px rgba(184,53,43,.15), inset 0 1px rgba(255,255,255,.95);
+}
+.delete-action-button:focus-visible,
+:where(.dp-edit, .candidate-edit, .jobs-edit, .applications-edit,
+  .iv-edit, .pl-edit, .em-edit, .at-edit, .lv-edit, .py-edit):focus-visible {
+  outline: 3px solid rgba(128,107,225,.32);
+  outline-offset: 2px;
+}
+.delete-action-error { max-width: 220px; color: #b42318; font-size: .73rem; line-height: 1.35; }
+
+@media (max-width: 760px) {
+  :where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+    .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header) {
+    min-height: 0;
+    border-radius: 17px;
+    padding: 18px;
+  }
+  table td:has(span.delete-action) { white-space: normal; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+
+/* Richer page surfaces and section-specific accents */
+:where(.dashboard-page, .departments-page, .candidates-page, .jobs-page,
+  .applications-page, .interviews-page, .placements-page, .payroll-page,
+  .employees-page, .attendance-page, .leave-page, .reports-page,
+  .candidate-jobs-page) {
+  position: relative;
+  isolation: isolate;
+}
+:where(.dashboard-page, .departments-page, .candidates-page, .jobs-page,
+  .applications-page, .interviews-page, .placements-page, .payroll-page,
+  .employees-page, .attendance-page, .leave-page, .reports-page,
+  .candidate-jobs-page)::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: -110px;
+  right: 2%;
+  width: min(34vw, 400px);
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(168, 151, 255, .16), rgba(255, 185, 169, .07) 48%, transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+  animation: hrms-glow-drift 12s ease-in-out infinite alternate;
+}
+
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header,
+  .dashboard-header) {
+  position: relative;
+  padding: 5px 2px 18px;
+  border-bottom: 1px solid rgba(213, 208, 235, .68);
+}
+:where(.dp-head, .candidates-header, .jobs-head, .applications-head,
+  .iv-head, .pl-head, .em-head, .at-head, .lv-head, .py-head, .rp-header,
+  .dashboard-header) h1 {
+  text-shadow: 0 5px 22px rgba(77, 66, 146, .10);
+}
+:where(.dp-eyebrow, .candidate-eyebrow, .jobs-eyebrow, .applications-eyebrow,
+  .iv-eyebrow, .pl-eyebrow, .dashboard-eyebrow) {
+  color: #7367bb;
+}
+
+:where(.dp-panel, .candidate-filter-bar, .candidate-form-panel, .candidate-table-panel,
+  .jobs-filter, .jobs-form-panel, .jobs-table-panel,
+  .applications-filter, .applications-form-panel, .applications-table-panel,
+  .iv-panel, .pl-panel, .em-panel, .at-panel, .lv-panel, .py-panel,
+  .rp-card, .rp-section, .dashboard-card, .dashboard-panel,
+  .cj-card, .cj-profile-form, .cj-notification) {
+  position: relative;
+  box-shadow:
+    0 20px 45px rgba(45, 39, 94, .07),
+    0 3px 8px rgba(45, 39, 94, .035),
+    inset 0 1px rgba(255, 255, 255, .9);
+}
+:where(.dashboard-card, .rp-card, .cj-card) {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+:where(.dashboard-card, .rp-card, .cj-card):hover {
+  transform: perspective(1000px) translateY(-7px) rotateX(1.5deg) rotateY(-1.2deg) translateZ(5px);
+}
+
+/* A restrained color identity for each HRMS workspace */
+.dashboard-card:nth-child(4n + 1), .rp-card:nth-child(4n + 1) { --tile-accent: #6f5bd3; --tile-wash: #f0edff; }
+.dashboard-card:nth-child(4n + 2), .rp-card:nth-child(4n + 2) { --tile-accent: #159a91; --tile-wash: #e8fbf7; }
+.dashboard-card:nth-child(4n + 3), .rp-card:nth-child(4n + 3) { --tile-accent: #eb806c; --tile-wash: #fff0ec; }
+.dashboard-card:nth-child(4n), .rp-card:nth-child(4n) { --tile-accent: #4d81cf; --tile-wash: #edf4ff; }
+:where(.dashboard-card, .rp-card) {
+  border-top: 3px solid var(--tile-accent, #7564d7);
+  background: linear-gradient(145deg, #fff 18%, var(--tile-wash, #f6f3ff));
+}
+:where(.dashboard-card-value, .rp-card strong) { color: var(--tile-accent, #6251c7); }
+
+/* Make list views feel like crafted data surfaces */
+:where(.dp-wrap, .candidate-table-panel, .jobs-table-panel, .applications-table-panel,
+  .iv-table-wrap, .pl-wrap, .em-wrap, .at-wrap, .lv-wrap, .py-wrap) {
+  perspective: 1200px;
+  box-shadow: 0 20px 48px rgba(45, 39, 94, .075), 0 3px 8px rgba(45, 39, 94, .035);
+}
+:where(.dp-table, .candidate-table, .jobs-table, .applications-table,
+  .iv-table, .pl-table, .em-table, .at-table, .lv-table, .py-table) thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: linear-gradient(100deg, #eeeaff 0%, #f6f4ff 60%, #fff2ee 100%);
+  color: #5f587f;
+}
+:where(.dp-table, .candidate-table, .jobs-table, .applications-table,
+  .iv-table, .pl-table, .em-table, .at-table, .lv-table, .py-table) tbody tr:hover {
+  background: linear-gradient(90deg, rgba(242, 239, 255, .7), rgba(255, 249, 247, .55));
+}
+
+/* Better controls and feedback */
+:where(.dp-field, .candidate-form label, .jobs-form label, .applications-form label,
+  .iv-field, .pl-field, .em-field, .at-field, .lv-field, .py-field) label,
+:where(.dp-field label, .candidate-filter-bar label, .jobs-filter label,
+  .applications-filter label, .iv-panel label, .pl-panel label,
+  .em-panel label, .at-panel label, .lv-panel label, .py-panel label) {
+  color: #514d6b;
+}
+:where(.dp-error, .candidate-error, .jobs-error, .applications-error,
+  .iv-error, .pl-error, .em-error, .at-error, .lv-error, .py-error, .rp-error) {
+  border: 1px solid #ffd3cf;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #fff2f0, #fff8f7);
+  box-shadow: 0 8px 20px rgba(198, 73, 63, .06);
+}
+:where(.dp-success, .candidate-notice, .jobs-notice, .applications-notice,
+  .iv-success, .pl-success, .em-success, .at-success, .lv-success, .py-success) {
+  border: 1px solid #bde9d9;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #effcf6, #f8fffc);
+  box-shadow: 0 8px 20px rgba(19, 139, 102, .06);
+}
+
+/* Recruitment, people, and finance accents */
+.candidates-page, .candidate-jobs-page { --page-accent: #eb806c; }
+.applications-page, .interviews-page, .jobs-page { --page-accent: #7663d8; }
+.placements-page, .employees-page { --page-accent: #159a91; }
+.attendance-page, .leave-page { --page-accent: #438eac; }
+.payroll-page, .reports-page { --page-accent: #4986c8; }
+:where(.candidate-status, .applications-status, .jobs-status, .cj-chip) {
+  box-shadow: inset 0 1px rgba(255, 255, 255, .75);
+}
+.cj-hero { border: 1px solid #dcd5ff; }
+.cj-hero h1 { color: #332c65; }
+.cj-card { border-top: 3px solid #9a89ed; }
+.cj-card:nth-child(3n + 2) { border-top-color: #54bdb2; }
+.cj-card:nth-child(3n) { border-top-color: #ff9b86; }
+.cj-notification.unread { border-left: 4px solid #7564d7; }
+
+/* Button sheen and soft 3D lift; no movement is required to use controls */
+:where(button, .admin-sidebar nav a) { -webkit-tap-highlight-color: transparent; }
+:where(button:not(:disabled), .admin-sidebar nav a) { transform-style: preserve-3d; }
+:where(.dp-btn, .candidate-primary, .jobs-primary, .applications-primary,
+  .iv-btn, .pl-btn, .em-btn, .at-btn, .lv-btn, .py-btn, .rp-button,
+  .dashboard-button, .cj-apply, .cj-retry, .login-submit) {
+  position: relative;
+  overflow: hidden;
+}
+:where(.dp-btn, .candidate-primary, .jobs-primary, .applications-primary,
+  .iv-btn, .pl-btn, .em-btn, .at-btn, .lv-btn, .py-btn, .rp-button,
+  .dashboard-button, .cj-apply, .cj-retry, .login-submit)::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 -140%;
+  width: 70%;
+  transform: skewX(-22deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .2), transparent);
+  transition: left .55s ease;
+  pointer-events: none;
+}
+:where(.dp-btn, .candidate-primary, .jobs-primary, .applications-primary,
+  .iv-btn, .pl-btn, .em-btn, .at-btn, .lv-btn, .py-btn, .rp-button,
+  .dashboard-button, .cj-apply, .cj-retry, .login-submit):hover:not(:disabled)::after { left: 150%; }
+
+@keyframes hrms-glow-drift {
+  from { transform: translate3d(0, 0, 0) scale(.95); opacity: .75; }
+  to { transform: translate3d(-24px, 18px, 0) scale(1.08); opacity: 1; }
+}
+@media (max-width: 760px) {
+  :where(.dashboard-card, .rp-card, .cj-card):hover { transform: translateY(-3px); }
+  :where(.dashboard-page, .departments-page, .candidates-page, .jobs-page,
+    .applications-page, .interviews-page, .placements-page, .payroll-page,
+    .employees-page, .attendance-page, .leave-page, .reports-page,
+    .candidate-jobs-page)::before { width: 75vw; right: -5vw; top: -65px; }
+}

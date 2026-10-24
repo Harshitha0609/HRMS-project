@@ -1,0 +1,52 @@
+.candidate-jobs-page{max-width:1100px;margin:0 auto;padding:28px;color:#172033;font-family:Arial,sans-serif}.cj-hero{background:#eff6ff;border-radius:14px;padding:24px;margin-bottom:22px}.cj-hero h1{margin:0 0 8px;font-size:30px}.cj-hero p{margin:0;color:#475569}.cj-logout{float:right;border:0;border-radius:7px;padding:9px 13px;background:#e2e8f0;color:#172033;cursor:pointer;font-weight:600}.cj-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}.cj-search{max-width:420px;width:100%;padding:11px 12px;border:1px solid #cbd5e1;border-radius:7px;font:inherit}.cj-count{color:#64748b;font-size:14px}.cj-tabs{display:flex;gap:8px;margin:16px 0;flex-wrap:wrap}.cj-tabs button,.cj-apply{border:0;border-radius:7px;padding:9px 13px;background:#2563eb;color:#fff;cursor:pointer;font-weight:600}.cj-tabs button{background:#e2e8f0;color:#334155}.cj-tabs button.active{background:#2563eb;color:#fff}.cj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}.cj-card{border:1px solid #e2e8f0;border-radius:12px;padding:18px;background:#fff;box-shadow:0 2px 7px #0f172a0a}.cj-card h2{font-size:20px;margin:0 0 8px}.cj-dept{color:#2563eb;font-weight:600;font-size:14px}.cj-meta{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0}.cj-chip{background:#f1f5f9;color:#334155;padding:5px 8px;border-radius:20px;font-size:12px;text-transform:capitalize}.cj-card p{white-space:pre-line;color:#475569;line-height:1.5}.cj-details{font-size:13px;color:#475569;line-height:1.7}.cj-error,.cj-empty{padding:18px;background:#f8fafc;border-radius:8px;color:#64748b}.cj-error{background:#fef2f2;color:#b91c1c}.cj-success{padding:12px 15px;border-radius:8px;margin:12px 0;background:#f0fdf4;color:#166534}.cj-retry{border:0;border-radius:6px;background:#2563eb;color:#fff;padding:9px 13px;cursor:pointer}.cj-notification{padding:16px;border:1px solid #e2e8f0;border-radius:10px;background:#fff;margin:10px 0}.cj-notification.unread{border-color:#93c5fd;background:#eff6ff}.cj-notification-head{display:flex;justify-content:space-between;gap:12px;align-items:center}.cj-notification time{color:#64748b;font-size:12px}.cj-notification p{margin:8px 0;color:#475569}.cj-notification button{border:1px solid #cbd5e1;border-radius:6px;background:#fff;padding:7px 10px;cursor:pointer}.cj-modal-backdrop{position:fixed;inset:0;z-index:5;display:grid;place-items:center;padding:18px;background:#0f172a88}.cj-modal{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:12px;padding:22px;box-sizing:border-box}.cj-modal label{display:grid;gap:7px;margin:14px 0;font-weight:600;font-size:14px}.cj-modal textarea,.cj-modal input,.cj-profile-form textarea,.cj-profile-form input,.cj-profile-form select{box-sizing:border-box;width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:7px;font:inherit}.cj-profile-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:20px;background:#fff;border:1px solid #e2e8f0;border-radius:12px}.cj-profile-form label{display:grid;gap:6px;color:#475569;font-weight:600;font-size:14px}.cj-profile-wide{grid-column:1/-1}.cj-modal-actions{display:flex;justify-content:flex-end;gap:9px}.cj-cancel{border:1px solid #cbd5e1;background:white;color:#334155;border-radius:7px;padding:9px 13px;cursor:pointer}@media(max-width:600px){.candidate-jobs-page{padding:15px}.cj-hero h1{font-size:25px}.cj-toolbar{align-items:stretch;flex-direction:column}.cj-profile-form{grid-template-columns:1fr}.cj-profile-wide{grid-column:auto}}
+
+/* Candidate-only fee transparency and payment history */
+.cj-fees-page { display: grid; gap: 18px; animation: hrms-page-enter .45s ease both; }
+.cj-fees-header { display: flex; align-items: center; justify-content: space-between; gap: 18px; border: 1px solid rgba(255,255,255,.85); border-radius: 20px; padding: 22px 24px; background: linear-gradient(115deg,#fff 0%,#f1eeff 64%,#eafaf6 100%); box-shadow: 0 16px 36px rgba(45,39,94,.08),inset 0 1px #fff; }
+.cj-fees-header h2 { margin: 0; color: #2c2850; font-size: clamp(1.4rem,3vw,1.85rem); letter-spacing: -.04em; }
+.cj-fees-header p:not(.cj-fees-eyebrow) { margin: 7px 0 0; color: #74718c; font-size: .9rem; }
+.cj-fees-eyebrow { margin: 0 0 6px; color: #7568bd; font-size: .68rem; font-weight: 800; letter-spacing: .12em; }
+.cj-fees-role { display: grid; gap: 4px; flex: 0 0 auto; border: 1px solid #d9d3f5; border-radius: 12px; padding: 10px 13px; background: rgba(255,255,255,.72); color: #6255ae; font-size: .82rem; font-weight: 700; }
+.cj-fees-role strong { color: #393164; font-size: .95rem; }
+.cj-fees-role span { color: #77718e; font-size: .75rem; font-weight: 500; }
+.cj-fee-summary { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+.cj-fee-card { position: relative; display: grid; gap: 7px; overflow: hidden; border: 1px solid rgba(225,222,242,.95); border-top: 3px solid var(--fee-accent); border-radius: 17px; padding: 19px 20px; background: linear-gradient(145deg,#fff,var(--fee-wash)); box-shadow: 0 13px 30px rgba(45,39,94,.07),inset 0 1px #fff; }
+.cj-fee-card::after { content: ''; position: absolute; width: 115px; height: 115px; top: -65px; right: -27px; border: 1px solid color-mix(in srgb,var(--fee-accent) 22%,transparent); border-radius: 50%; box-shadow: 0 0 0 14px color-mix(in srgb,var(--fee-accent) 5%,transparent); pointer-events: none; }
+.cj-fee-total { --fee-accent: #705bd2; --fee-wash: #f4f1ff; }
+.cj-fee-paid { --fee-accent: #168f88; --fee-wash: #edfaf6; }
+.cj-fee-due { --fee-accent: #e77968; --fee-wash: #fff3ef; }
+.cj-fee-card > span { color: #73718a; font-size: .82rem; font-weight: 650; }
+.cj-fee-card strong { color: var(--fee-accent); font-size: clamp(1.45rem,3vw,2rem); letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+.cj-fee-card small { color: #85829a; font-size: .75rem; }
+.cj-fee-progress-panel,.cj-payment-history,.cj-course-catalog { border: 1px solid rgba(225,222,242,.95); border-radius: 17px; padding: 20px; background: linear-gradient(145deg,#fff,#fbfaff); box-shadow: 0 14px 32px rgba(45,39,94,.06),inset 0 1px #fff; }
+.cj-course-catalog-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 13px; }
+.cj-course-card { display: grid; align-content: start; gap: 9px; min-width: 0; border: 1px solid #e8e4f4; border-radius: 14px; padding: 16px; background: linear-gradient(145deg,#fff,#f9f7ff); box-shadow: 0 8px 20px rgba(45,39,94,.045); transition: transform .2s ease,box-shadow .2s ease,border-color .2s ease; }
+.cj-course-card:hover { transform: translateY(-3px); border-color: #c9bdf7; box-shadow: 0 13px 25px rgba(45,39,94,.1); }
+.cj-course-card.assigned { border-color: #8a78df; background: linear-gradient(145deg,#fff,#f1edff); }
+.cj-course-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+.cj-course-card h4 { margin: 0; color: #302c52; font-size: .96rem; }
+.cj-course-assigned { flex: 0 0 auto; border-radius: 99px; padding: 4px 8px; background: #e7e2ff; color: #5946b1; font-size: .66rem; font-weight: 800; }
+.cj-course-duration { margin: 0; color: #726b8c; font-size: .78rem; font-weight: 700; }
+.cj-course-description { margin: 0; color: #77748c; font-size: .83rem; line-height: 1.5; }
+.cj-course-price { margin-top: 4px; color: #286f54; font-size: 1.1rem; }
+.cj-fee-progress-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 13px; color: #403b63; }
+.cj-fee-progress-heading > div { display: grid; gap: 4px; }
+.cj-fee-progress-heading > div span,.cj-fee-progress-heading > strong small { color: #85829a; font-size: .78rem; font-weight: 500; }
+.cj-fee-progress-track { height: 11px; overflow: hidden; border: 1px solid #efedf7; border-radius: 99px; background: #f2f0f8; }
+.cj-fee-progress-track > span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,#7764dd,#51b9a6); box-shadow: 0 2px 8px rgba(96,83,193,.2); transition: width .55s cubic-bezier(.2,.75,.25,1); }
+.cj-fee-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.cj-fee-section-heading h3 { margin: 0; color: #302c52; font-size: 1.05rem; }
+.cj-fee-section-heading > span { border-radius: 99px; padding: 6px 10px; background: #f0edff; color: #6252bd; font-size: .75rem; font-weight: 700; }
+.cj-payment-table-scroll { overflow-x: auto; border: 1px solid #eeecf5; border-radius: 12px; }
+.cj-payment-table { width: 100%; border-collapse: collapse; text-align: left; }
+.cj-payment-table th { padding: 12px 14px; background: linear-gradient(100deg,#eeeaff,#f8f6ff 68%,#fff3ef); color: #625d7d; font-size: .72rem; letter-spacing: .07em; text-transform: uppercase; }
+.cj-payment-table td { border-top: 1px solid #efedf6; padding: 13px 14px; color: #66637d; font-size: .86rem; }
+.cj-payment-table td:nth-child(2) { color: #16856f; font-weight: 750; white-space: nowrap; }
+.cj-fees-empty { margin: 0; border-radius: 11px; padding: 18px; background: #f8f7fc; color: #77748c; text-align: center; }
+.cj-fees-footnote { margin: 12px 0 0; color: #85829a; font-size: .76rem; line-height: 1.5; }
+@media(max-width:700px) {
+  .cj-fees-header { align-items: flex-start; flex-direction: column; padding: 18px; }
+  .cj-fee-summary { grid-template-columns: 1fr; }
+  .cj-fee-card { min-height: 126px; }
+  .cj-fee-progress-panel,.cj-payment-history,.cj-course-catalog { padding: 16px; }
+}
