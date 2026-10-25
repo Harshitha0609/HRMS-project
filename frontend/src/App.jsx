@@ -198,11 +198,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={
-            user
-              ? <Navigate to={user.role === 'admin' ? '/admin-dashboard' : '/candidate-dashboard'} replace />
-              : <Login onAuthenticated={setUser} />
-          }
+          element={<Login onAuthenticated={setUser} />}
         />
 
         <Route
