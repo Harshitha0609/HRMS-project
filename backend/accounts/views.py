@@ -179,11 +179,9 @@ def candidate_fees_view(request):
 
 
 def candidate_courses_view(request):
-    """List active courses and fees for the signed-in candidate."""
+    """List public course options for candidate registration and fee views."""
     if request.method != 'GET':
         return JsonResponse({'error': 'Only GET requests are allowed.'}, status=405)
-    if not request.user.is_authenticated or getattr(request.user, 'role', None) != 'candidate':
-        return JsonResponse({'error': 'Candidate login is required.'}, status=403)
 
     courses = Course.objects.filter(status='active').order_by('course_name')
     return JsonResponse([
@@ -360,6 +358,7 @@ def register_candidate_view(request):
     first_name = request.POST.get('first_name', '').strip()
     last_name = request.POST.get('last_name', '').strip()
     phone = request.POST.get('phone', '').strip()
+    course_id = request.POST.get('course', '').strip()
     password = request.POST.get('password', '')
     password_confirm = request.POST.get('password_confirm', '')
     date_of_birth_raw = request.POST.get('date_of_birth', '').strip()
@@ -378,6 +377,14 @@ def register_candidate_view(request):
     missing = [name for name, value in required.items() if not value]
     if missing:
         return JsonResponse({'error': 'Complete all required fields.'}, status=400)
+    if not course_id:
+        return JsonResponse({'error': 'Select a course before registering.'}, status=400)
+
+    try:
+        course = Course.objects.get(id=int(course_id), status='active')
+    except (Course.DoesNotExist, TypeError, ValueError):
+        return JsonResponse({'error': 'Select an available course.'}, status=400)
+
     if password != password_confirm:
         return JsonResponse({'error': 'Passwords do not match.'}, status=400)
 
@@ -426,6 +433,8 @@ def register_candidate_view(request):
             )
             Candidate.objects.create(
                 email=email,
+                course=course,
+                course_fee=course.course_fee,
                 first_name=first_name,
                 last_name=last_name,
                 phone=phone,

@@ -28,11 +28,56 @@ import './App.css';
 
 const ACCOUNTS_API = 'http://localhost:8000/api/accounts/';
 
+function EyeIcon({ visible }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+      {!visible && <path d="m3 3 18 18" />}
+    </svg>
+  );
+}
+
+function PasswordField({ id, label, value, onChange, visible, onToggle, autoComplete }) {
+  return (
+    <div className="login-field">
+      <label htmlFor={id}>{label}</label>
+      <div className="login-password-control">
+        <input
+          id={id}
+          type={visible ? 'text' : 'password'}
+          required
+          autoComplete={autoComplete}
+          value={value}
+          onChange={onChange}
+          placeholder="Enter password"
+        />
+        <button
+          className="login-password-toggle"
+          type="button"
+          onClick={onToggle}
+          aria-label={visible ? `Hide ${label.toLowerCase()}` : `Show ${label.toLowerCase()}`}
+          aria-pressed={visible}
+          title={visible ? 'Hide password' : 'Show password'}
+        >
+          <EyeIcon visible={visible} />
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function Login({ onAuthenticated }) {
   const [registering, setRegistering] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [courseId, setCourseId] = useState('');
+  const [coursesLoading, setCoursesLoading] = useState(false);
+  const [coursesError, setCoursesError] = useState('');
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -53,6 +98,31 @@ function Login({ onAuthenticated }) {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!registering) return undefined;
+    let active = true;
+    setCoursesLoading(true);
+    setCoursesError('');
+
+    apiFetch(ACCOUNTS_API + 'courses/')
+      .then(async (response) => {
+        const data = await response.json().catch(() => []);
+        if (!response.ok) throw new Error(data.error || 'Could not load available courses.');
+        return data;
+      })
+      .then((data) => {
+        if (active) setCourses(Array.isArray(data) ? data : []);
+      })
+      .catch((error) => {
+        if (active) setCoursesError(error.message || 'Could not load available courses.');
+      })
+      .finally(() => {
+        if (active) setCoursesLoading(false);
+      });
+
+    return () => { active = false; };
+  }, [registering]);
+
   const handleLogin = async (event) => {
     event.preventDefault();
     setMessage('');
@@ -66,6 +136,7 @@ function Login({ onAuthenticated }) {
       formData.append('first_name', firstName);
       formData.append('last_name', lastName);
       formData.append('phone', phone);
+      formData.append('course', courseId);
       formData.append('password_confirm', passwordConfirm);
       formData.append('city', city);
       formData.append('state', state);
@@ -101,6 +172,9 @@ function Login({ onAuthenticated }) {
         setRegistering(false);
         setPassword('');
         setPasswordConfirm('');
+        setCourseId('');
+        setShowPassword(false);
+        setShowPasswordConfirm(false);
         return;
       }
 
@@ -119,6 +193,11 @@ function Login({ onAuthenticated }) {
     setRegistering((value) => !value);
     setMessage('');
     setMessageSuccess(false);
+    setPassword('');
+    setPasswordConfirm('');
+    setCourseId('');
+    setShowPassword(false);
+    setShowPasswordConfirm(false);
   };
 
   return (
@@ -133,6 +212,18 @@ function Login({ onAuthenticated }) {
             <div className="login-field"><label htmlFor="register-last-name">Last name</label><input id="register-last-name" required autoComplete="family-name" value={lastName} onChange={(event) => setLastName(event.target.value)} /></div>
             <div className="login-field"><label htmlFor="register-email">Email</label><input id="register-email" type="email" required autoComplete="email" value={email} onChange={(event) => setEmail(event.target.value)} /></div>
             <div className="login-field"><label htmlFor="register-phone">Phone</label><input id="register-phone" type="tel" required autoComplete="tel" value={phone} onChange={(event) => setPhone(event.target.value)} /></div>
+            <div className="login-field">
+              <label htmlFor="register-course">Choose a course</label>
+              <select id="register-course" required value={courseId} onChange={(event) => setCourseId(event.target.value)} disabled={coursesLoading || Boolean(coursesError) || courses.length === 0}>
+                <option value="">{coursesLoading ? 'Loading courses…' : 'Select a course'}</option>
+                {courses.map((course) => (
+                  <option key={course.id} value={course.id}>
+                    {course.course_name} · ₹{Number(course.course_fee || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                  </option>
+                ))}
+              </select>
+              {coursesError ? <small className="login-course-message error">{coursesError}</small> : courses.length === 0 && !coursesLoading ? <small className="login-course-message">No active courses are available yet. Please contact the administrator.</small> : courseId && <small className="login-course-message">Your selected course fee is ₹{Number(courses.find((course) => String(course.id) === courseId)?.course_fee || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}.</small>}
+            </div>
             <div className="login-field"><label htmlFor="register-city">City</label><input id="register-city" value={city} onChange={(event) => setCity(event.target.value)} /></div>
             <div className="login-field"><label htmlFor="register-state">State</label><input id="register-state" value={state} onChange={(event) => setState(event.target.value)} /></div>
             <div className="login-field"><label htmlFor="register-gender">Gender</label><select id="register-gender" value={gender} onChange={(event) => setGender(event.target.value)}><option value="">Select gender</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select></div>
@@ -149,13 +240,10 @@ function Login({ onAuthenticated }) {
             <label htmlFor="login-username">Username</label>
             <input id="login-username" type="text" required autoComplete="username" value={username} onChange={(event) => setUsername(event.target.value)} placeholder="Enter username" />
           </div>
-          <div className="login-field">
-            <label htmlFor="login-password">Password</label>
-            <input id="login-password" type="password" required autoComplete={registering ? 'new-password' : 'current-password'} value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter password" />
-          </div>
-          {registering && <div className="login-field"><label htmlFor="register-password-confirm">Confirm password</label><input id="register-password-confirm" type="password" required autoComplete="new-password" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} /></div>}
+          <PasswordField id="login-password" label="Password" value={password} onChange={(event) => setPassword(event.target.value)} visible={showPassword} onToggle={() => setShowPassword((visible) => !visible)} autoComplete={registering ? 'new-password' : 'current-password'} />
+          {registering && <PasswordField id="register-password-confirm" label="Confirm password" value={passwordConfirm} onChange={(event) => setPasswordConfirm(event.target.value)} visible={showPasswordConfirm} onToggle={() => setShowPasswordConfirm((visible) => !visible)} autoComplete="new-password" />}
           {message && <div className={messageSuccess ? 'login-success' : 'login-error'} role={messageSuccess ? 'status' : 'alert'}>{message}</div>}
-          <button className="login-submit" type="submit" disabled={submitting}>{submitting ? (registering ? 'Creating account…' : 'Signing in…') : (registering ? 'Create candidate account' : 'Sign in')}</button>
+          <button className="login-submit" type="submit" disabled={submitting || (registering && (coursesLoading || Boolean(coursesError) || courses.length === 0 || !courseId))}>{submitting ? (registering ? 'Creating account…' : 'Signing in…') : (registering ? 'Create candidate account' : 'Sign in')}</button>
         </form>
         <div className="login-toggle">{registering ? 'Already registered? ' : 'New candidate? '}<button type="button" onClick={toggleMode}>{registering ? 'Sign in' : 'Create an account'}</button></div>
       </section>
